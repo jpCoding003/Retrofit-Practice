@@ -9,6 +9,6 @@ interface RetrofitService {
 //    @GET("products?limit=10")
 //    fun listProduct(): Call<ProductRoot>
 
-    @GET("/products")
+    @GET("/products?limit=7")
     fun listProducts():Call<RootProduct>
 }

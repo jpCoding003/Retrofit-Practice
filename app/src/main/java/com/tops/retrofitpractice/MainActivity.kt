@@ -6,6 +6,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.tops.retrofitpractice.Adapter.MyAdapter
 import com.tops.retrofitpractice.databinding.ActivityMainBinding
 import com.tops.retrofitpractice.model.RootProduct
 import com.tops.retrofitpractice.service.RetrofitClient
@@ -29,6 +31,9 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        setSupportActionBar(binding.toolbarview)
+
+        title = "Api Calling"
         val call : Call<RootProduct> = RetrofitClient.getInstance().listProducts()
         call.enqueue(object: retrofit2.Callback<RootProduct>{
             override fun onResponse(
@@ -37,7 +42,10 @@ class MainActivity : AppCompatActivity() {
             ) {
                 if (response.isSuccessful) {
                     val data = response.body()
-                    binding.textview.setText(data.toString())
+//                    binding.textview.setText(data.toString())
+                    binding.recyclerView.layoutManager = LinearLayoutManager(applicationContext)
+                    binding.recyclerView.adapter = MyAdapter(data!!.products)
+
                     Log.i(TAG, "Total Products : ${data}")
                 }
             }

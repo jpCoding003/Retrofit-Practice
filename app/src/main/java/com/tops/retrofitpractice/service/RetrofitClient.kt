@@ -11,7 +11,6 @@ class RetrofitClient {
 
         private var service: RetrofitService? =null
 
-
         fun getInstance(): RetrofitService= service?:synchronized(this){
             service?: buildRetrofitService().also { service = it}
         }
