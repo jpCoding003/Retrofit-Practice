@@ -11,15 +11,19 @@ class RetrofitClient {
 
         private var service: RetrofitService? =null
 
+
         fun getInstance(): RetrofitService= service?:synchronized(this){
             service?: buildRetrofitService().also { service = it}
         }
 
         private fun buildRetrofitService(): RetrofitService {
-            Log.i(TAG, "RetrofitClient = buildRetrofitService Called ")
-            val retrofit = Retrofit.Builder().baseUrl("https://dummyjson.com")
+
+            val retrofit = Retrofit.Builder()
+                .baseUrl("https://dummyjson.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
+            Log.i(TAG, "RetrofitClient = buildRetrofitService Called ")
+            Log.i(TAG, " IS_DATA_Present_Or_Not:=  $service")
             return retrofit.create(RetrofitService::class.java)
         }
 
