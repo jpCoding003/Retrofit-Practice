@@ -1,24 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="7dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardUseCompatPadding="true"
-        app:cardCornerRadius="5dp"
-        android:background="#C6C6EA"
+        app:contentPadding="5dp"
+        app:cardCornerRadius="9dp"
+        app:cardBackgroundColor="@color/design_default_color_secondary"
         android:elevation="12dp">
 
-        <TextView
-            android:id="@+id/textview_data"
+
+        <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/imageviewData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_launcher_foreground" />
+
+            <LinearLayout
+                android:layout_width="190dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/textview_data"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="text View"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <TextView
+                    android:id="@+id/textview_data2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Text 2"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="text View"
-            android:paddingStart="12dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
+            android:layout_gravity="end"
+            android:orientation="horizontal">
+
+            <androidx.constraintlayout.utils.widget.ImageFilterButton
+                android:id="@+id/btnedit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#FFC6C6"
+                android:src="@android:drawable/ic_menu_edit" />
+
+            <androidx.constraintlayout.utils.widget.ImageFilterButton
+                android:id="@+id/btndelet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#FFC6C6"
+                android:src="@android:drawable/ic_menu_delete" />
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 
