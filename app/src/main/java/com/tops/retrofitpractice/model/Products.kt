@@ -3,7 +3,7 @@ package com.tops.retrofitpractice.model
 
 import com.google.gson.annotations.SerializedName
 
-data class Product(
+data class Products(
     @SerializedName("availabilityStatus")
     val availabilityStatus: String,
     @SerializedName("brand")
@@ -49,3 +49,8 @@ data class Product(
     @SerializedName("weight")
     val weight: Int
 )
+
+//
+//data class ProductResponse(
+//    val products: List<Products>
+//)

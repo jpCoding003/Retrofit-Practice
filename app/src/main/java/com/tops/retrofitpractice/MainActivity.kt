@@ -1,28 +1,27 @@
 package com.tops.retrofitpractice
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tops.retrofitpractice.Adapter.MyAdapter
+import com.tops.retrofitpractice.ViewModel.ProductsViewModel
 import com.tops.retrofitpractice.databinding.ActivityMainBinding
-import com.tops.retrofitpractice.model.RootProduct
-import com.tops.retrofitpractice.service.RetrofitClient
-import com.tops.retrofitpractice.service.RetrofitService
-import okhttp3.Callback
-import retrofit2.Call
-import retrofit2.Response
 
 private const val TAG = "MainActivity"
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var adapter: MyAdapter
+    private val productviewmodel: ProductsViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding= ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         enableEdgeToEdge()
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -33,30 +32,12 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbarview)
 
-        title = "Api Calling"
-        val call : Call<RootProduct> = RetrofitClient.getInstance().listProducts()
-        call.enqueue(object: retrofit2.Callback<RootProduct>{
-            override fun onResponse(
-                call: Call<RootProduct>,
-                response: Response<RootProduct>
-            ) {
-                if (response.isSuccessful) {
-                    val data = response.body()
-//                    binding.textview.setText(data.toString())
-                    binding.recyclerView.layoutManager = LinearLayoutManager(applicationContext)
-                    binding.recyclerView.adapter = MyAdapter(data!!.products)
+        adapter = MyAdapter(mutableListOf())
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.adapter = adapter
 
-                    Log.i(TAG, "Total Products : ${data}")
-                }
-            }
-
-            override fun onFailure(
-                call: Call<RootProduct?>,
-                t: Throwable
-            ) {
-                 Log.i(TAG, t.message!!)
-            }
-
+        productviewmodel.productList.observe(this, Observer{
+            list-> adapter.submitlist(list)
         })
     }
 }

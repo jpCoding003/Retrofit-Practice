@@ -1,38 +1,36 @@
 package com.tops.retrofitpractice.Adapter
 
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
-import com.tops.retrofitpractice.databinding.ProductRowItemBinding
-import com.tops.retrofitpractice.model.Product
+import com.tops.retrofitpractice.databinding.ItemProductBinding
+import com.tops.retrofitpractice.model.Products
 
-class MyAdapter(private val products: List<Product>): RecyclerView.Adapter<MyAdapter.ProductViewHolder>() {
-    class ProductViewHolder (val binding: ProductRowItemBinding) : RecyclerView.ViewHolder(binding.root)
-
+class MyAdapter(private var productslist : List<Products>) : RecyclerView.Adapter<MyAdapter.ProductsViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): MyAdapter.ProductViewHolder {
-        val binding= ProductRowItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-        return ProductViewHolder(binding)
+    ): ProductsViewHolder {
+        val binding = ItemProductBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        return ProductsViewHolder(binding)
     }
 
-
-    override fun onBindViewHolder(holder: MyAdapter.ProductViewHolder, position: Int) {
-        val product = products[position]
-        holder.binding.textviewData.setText(product.title)
-        holder.binding.textviewData2.setText(product.price.toString())
-
-        Picasso.get()
-            .load(product.thumbnail)
-            .into(holder.binding.imageviewData)
+    override fun onBindViewHolder(
+        holder: ProductsViewHolder,
+        position: Int
+    ) {
+        val products = productslist[position]
+       holder.binding.tvProducts.text = products.title
+        holder.binding.tvprice.text = products.price.toString()
     }
 
-    override fun getItemCount(): Int {
-        return  products.size
+    override fun getItemCount(): Int = productslist.size
+
+    fun submitlist(list: List<Products>){
+        productslist = list
+        notifyDataSetChanged()
     }
+    class ProductsViewHolder(val binding: ItemProductBinding) : RecyclerView.ViewHolder(binding.root)
+
 
 }

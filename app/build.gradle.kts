@@ -40,6 +40,8 @@ android {
 
 dependencies {
 
+    //ViewModelScope
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
     implementation (libs.picasso)
 
     implementation(libs.retrofit)
