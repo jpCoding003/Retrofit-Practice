@@ -3,10 +3,17 @@ package com.tops.retrofitpractice.Adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.tops.retrofitpractice.MainActivity
 import com.tops.retrofitpractice.databinding.ItemProductBinding
 import com.tops.retrofitpractice.model.Products
 
-class MyAdapter(private var productslist : List<Products>) : RecyclerView.Adapter<MyAdapter.ProductsViewHolder>() {
+
+
+class MyAdapter(private var productslist: List<Products>,private val listener: OnProductLongClickListener) : RecyclerView.Adapter<MyAdapter.ProductsViewHolder>() {
+
+    interface OnProductLongClickListener {
+        fun onProductLongClick(product: Products)
+    }
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -22,12 +29,17 @@ class MyAdapter(private var productslist : List<Products>) : RecyclerView.Adapte
         val products = productslist[position]
        holder.binding.tvProducts.text = products.title
         holder.binding.tvprice.text = products.price.toString()
+
+        holder.binding.root.setOnLongClickListener {
+            listener.onProductLongClick(products)
+            true
+        }
     }
 
     override fun getItemCount(): Int = productslist.size
 
     fun submitlist(list: List<Products>){
-        productslist = list
+        productslist = list.toList()
         notifyDataSetChanged()
     }
     class ProductsViewHolder(val binding: ItemProductBinding) : RecyclerView.ViewHolder(binding.root)

@@ -10,4 +10,9 @@ class RepositoryApi {
     suspend fun getAllProducts(): List<Products>{
         return callApi.getAll().products
     }
+
+    suspend fun deleteProduct(productId: Int): Boolean {
+        val response = callApi.deleteProduct(productId)
+        return response.isSuccessful
+    }
 }

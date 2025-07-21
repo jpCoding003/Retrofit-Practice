@@ -1,8 +1,10 @@
 package com.tops.retrofitpractice
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -11,9 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.tops.retrofitpractice.Adapter.MyAdapter
 import com.tops.retrofitpractice.ViewModel.ProductsViewModel
 import com.tops.retrofitpractice.databinding.ActivityMainBinding
+import com.tops.retrofitpractice.model.Products
 
 private const val TAG = "MainActivity"
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),MyAdapter.OnProductLongClickListener {
 
     private lateinit var adapter: MyAdapter
     private val productviewmodel: ProductsViewModel by viewModels()
@@ -32,12 +35,19 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbarview)
 
-        adapter = MyAdapter(mutableListOf())
+        adapter = MyAdapter(mutableListOf(),
+            this)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
 
         productviewmodel.productList.observe(this, Observer{
             list-> adapter.submitlist(list)
         })
+        productviewmodel.fetchData()
+    }
+
+    override fun onProductLongClick(product: Products) {
+        Toast.makeText(this, "Deleting ${product.title}", Toast.LENGTH_SHORT).show()
+        productviewmodel.deleteProductById(product.id)
     }
 }
