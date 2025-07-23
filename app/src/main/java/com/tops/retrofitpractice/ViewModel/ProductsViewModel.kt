@@ -13,8 +13,6 @@ class ProductsViewModel : ViewModel() {
 
     private val repository = RepositoryApi()
 
-    private val _deleteStatus = MutableLiveData<Boolean>()
-
     private val _productList = MutableLiveData<List<Products>>()
     val productList: LiveData<List<Products>> = _productList
 
@@ -38,7 +36,7 @@ class ProductsViewModel : ViewModel() {
             try {
                 val isDeleted = repository.deleteProduct(productId)
                 if (isDeleted) {
-                    fetchData()
+                  _productList.value = _productList.value?.filter { it.id != productId }
                 } else {
                     Log.e("DeleteError", "Deletion failed for product id $productId")
                 }

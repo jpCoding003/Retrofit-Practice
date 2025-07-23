@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -35,8 +34,7 @@ class MainActivity : AppCompatActivity(),MyAdapter.OnProductLongClickListener {
 
         setSupportActionBar(binding.toolbarview)
 
-        adapter = MyAdapter(mutableListOf(),
-            this)
+        adapter = MyAdapter(mutableListOf(),this)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
 
@@ -50,4 +48,5 @@ class MainActivity : AppCompatActivity(),MyAdapter.OnProductLongClickListener {
         Toast.makeText(this, "Deleting ${product.title}", Toast.LENGTH_SHORT).show()
         productviewmodel.deleteProductById(product.id)
     }
+
 }

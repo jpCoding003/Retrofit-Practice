@@ -8,12 +8,14 @@ import com.tops.retrofitpractice.databinding.ItemProductBinding
 import com.tops.retrofitpractice.model.Products
 
 
-
-class MyAdapter(private var productslist: List<Products>,private val listener: OnProductLongClickListener) : RecyclerView.Adapter<MyAdapter.ProductsViewHolder>() {
+class MyAdapter(private var productslist: MutableList<Products>,
+                private val listener: OnProductLongClickListener
+) : RecyclerView.Adapter<MyAdapter.ProductsViewHolder>() {
 
     interface OnProductLongClickListener {
         fun onProductLongClick(product: Products)
     }
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -39,7 +41,8 @@ class MyAdapter(private var productslist: List<Products>,private val listener: O
     override fun getItemCount(): Int = productslist.size
 
     fun submitlist(list: List<Products>){
-        productslist = list.toList()
+        productslist.clear()
+        productslist = list.toMutableList()
         notifyDataSetChanged()
     }
     class ProductsViewHolder(val binding: ItemProductBinding) : RecyclerView.ViewHolder(binding.root)
