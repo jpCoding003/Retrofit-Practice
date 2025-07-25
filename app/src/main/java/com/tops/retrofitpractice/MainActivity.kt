@@ -1,6 +1,7 @@
 package com.tops.retrofitpractice
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -23,8 +24,8 @@ class MainActivity : AppCompatActivity(),MyAdapter.OnProductLongClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
         enableEdgeToEdge()
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -33,15 +34,18 @@ class MainActivity : AppCompatActivity(),MyAdapter.OnProductLongClickListener {
         }
 
         setSupportActionBar(binding.toolbarview)
-
+        productviewmodel.fetchData()
         adapter = MyAdapter(mutableListOf(),this)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
-
         productviewmodel.productList.observe(this, Observer{
-            list-> adapter.submitlist(list)
+            list-> if (list.isNotEmpty()) {
+            adapter.submitlist(list)
+            Log.i("ListFromViewmodel", "This Is mainactivity $list")
+        }else{
+            Toast.makeText(this, "List Is Empty", Toast.LENGTH_LONG).show()
+        }
         })
-        productviewmodel.fetchData()
     }
 
     override fun onProductLongClick(product: Products) {

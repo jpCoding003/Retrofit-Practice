@@ -1,9 +1,9 @@
 package com.tops.retrofitpractice.Adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.tops.retrofitpractice.MainActivity
 import com.tops.retrofitpractice.databinding.ItemProductBinding
 import com.tops.retrofitpractice.model.Products
 
@@ -29,6 +29,7 @@ class MyAdapter(private var productslist: MutableList<Products>,
         position: Int
     ) {
         val products = productslist[position]
+        Log.i("ListFromViewmodel", "This Is adapter  $products")
        holder.binding.tvProducts.text = products.title
         holder.binding.tvprice.text = products.price.toString()
 
@@ -42,10 +43,10 @@ class MyAdapter(private var productslist: MutableList<Products>,
 
     fun submitlist(list: List<Products>){
         productslist.clear()
+        Log.i("ListFromViewmodel", "$productslist")
         productslist = list.toMutableList()
         notifyDataSetChanged()
     }
     class ProductsViewHolder(val binding: ItemProductBinding) : RecyclerView.ViewHolder(binding.root)
-
 
 }

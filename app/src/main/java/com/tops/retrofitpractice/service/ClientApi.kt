@@ -12,5 +12,4 @@ object ClientApi {
 
         retrofit.create(ApiServices::class.java)
     }
-
 }

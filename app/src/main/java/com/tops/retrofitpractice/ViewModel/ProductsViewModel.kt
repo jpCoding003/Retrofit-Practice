@@ -1,15 +1,16 @@
 package com.tops.retrofitpractice.ViewModel
 
+import android.app.Application
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tops.retrofitpractice.RepositoryApi
 import com.tops.retrofitpractice.model.Products
 import kotlinx.coroutines.launch
 
-class ProductsViewModel : ViewModel() {
+class ProductsViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository = RepositoryApi()
 
@@ -24,6 +25,7 @@ class ProductsViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val products = repository.getAllProducts()
+                Log.i("ListFromViewmodel", "This Is Viewmodel  $products")
                 _productList.value = products
             } catch (e: Exception) {
                 Log.e("FetchError", e.toString())
@@ -31,7 +33,15 @@ class ProductsViewModel : ViewModel() {
         }
     }
 
-    fun deleteProductById(productId: Int) {
+    fun addProduct(product: Products) {
+        viewModelScope.launch {
+            repository.addProduct(product)
+            fetchData() // Refresh list after adding
+        }
+    }
+
+
+    fun deleteProductById(productId: Int?) {
         viewModelScope.launch {
             try {
                 val isDeleted = repository.deleteProduct(productId)

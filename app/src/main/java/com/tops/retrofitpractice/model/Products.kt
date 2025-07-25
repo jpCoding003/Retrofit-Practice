@@ -17,7 +17,7 @@ data class Products(
     @SerializedName("discountPercentage")
     val discountPercentage: Double,
     @SerializedName("id")
-    val id: Int,
+    val id: Int? = null,
     @SerializedName("images")
     val images: List<String>,
     @SerializedName("meta")
@@ -49,8 +49,3 @@ data class Products(
     @SerializedName("weight")
     val weight: Int
 )
-
-//
-//data class ProductResponse(
-//    val products: List<Products>
-//)
