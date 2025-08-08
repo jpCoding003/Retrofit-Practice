@@ -1,6 +1,6 @@
 package com.tops.retrofitpractice.service
 
-import com.tops.retrofitpractice.model.Products
+import com.tops.retrofitpractice.model.Product
 import com.tops.retrofitpractice.model.ProductsResponse
 import retrofit2.Response
 import retrofit2.http.Body
@@ -14,8 +14,8 @@ interface ApiServices {
     @GET("products")
     suspend fun getAll(): ProductsResponse
 
-    @POST("products")
-    suspend fun addProduct(@Body products: Products): Products
+    @POST("products/add")
+    suspend fun addProduct(@Body products: Product): Response<Product>
 
     @DELETE("products/{id}")
     suspend fun deleteProduct(@Path("id") productId: Int?): Response<Unit>

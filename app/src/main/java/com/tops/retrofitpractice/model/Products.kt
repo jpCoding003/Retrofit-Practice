@@ -49,3 +49,14 @@ data class Products(
     @SerializedName("weight")
     val weight: Int
 )
+
+data class Product(
+    @SerializedName("title")
+    val title: String,
+    @SerializedName("description")
+    val description: String,
+    @SerializedName("category")
+    val category: String,
+    @SerializedName("price")
+    val price: Double
+)

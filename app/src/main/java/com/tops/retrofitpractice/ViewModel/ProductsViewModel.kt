@@ -7,7 +7,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.tops.retrofitpractice.RepositoryApi
+import com.tops.retrofitpractice.model.Product
 import com.tops.retrofitpractice.model.Products
+import com.tops.retrofitpractice.service.ApiServices
+import com.tops.retrofitpractice.service.ClientApi
 import kotlinx.coroutines.launch
 
 class ProductsViewModel(application: Application) : AndroidViewModel(application) {
@@ -33,9 +36,16 @@ class ProductsViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
-    fun addProduct(product: Products) {
+    fun addProduct(product: Product,onResult: (Int) -> Unit) {
         viewModelScope.launch {
-            repository.addProduct(product)
+//            repository.addProduct(product)
+            val response = repository.addProduct(product)
+            onResult(response.code()) // Send HTTP status code back
+            Log.i("Api", "Response Status=== ${response.code()}")
+            if (response.isSuccessful) {
+                fetchData() // Refresh list only if success
+            }
+
             fetchData() // Refresh list after adding
         }
     }

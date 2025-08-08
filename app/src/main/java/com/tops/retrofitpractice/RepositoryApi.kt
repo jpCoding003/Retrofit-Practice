@@ -1,7 +1,9 @@
 package com.tops.retrofitpractice
 
+import com.tops.retrofitpractice.model.Product
 import com.tops.retrofitpractice.model.Products
 import com.tops.retrofitpractice.service.ClientApi
+import retrofit2.Response
 
 class RepositoryApi {
 
@@ -16,6 +18,9 @@ class RepositoryApi {
         return response.isSuccessful
     }
 
-    suspend fun addProduct(products: Products) = callApi.addProduct(products)
+//    suspend fun addProduct(products: Product) = callApi.addProduct(products)
+    suspend fun addProduct(products: Product): Response<Product> {
+        return callApi.addProduct(products)
+    }
 
 }

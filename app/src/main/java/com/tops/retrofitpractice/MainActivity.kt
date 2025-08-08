@@ -1,5 +1,6 @@
 package com.tops.retrofitpractice
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -46,6 +47,11 @@ class MainActivity : AppCompatActivity(),MyAdapter.OnProductLongClickListener {
             Toast.makeText(this, "List Is Empty", Toast.LENGTH_LONG).show()
         }
         })
+
+        binding.btnAddProduct.setOnClickListener {
+            val intent = Intent(this, NewProductActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onProductLongClick(product: Products) {

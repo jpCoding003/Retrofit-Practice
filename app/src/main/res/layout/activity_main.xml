@@ -6,6 +6,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#4FC3F7"
     tools:context=".MainActivity"
     android:orientation="vertical">
 
@@ -13,11 +14,22 @@
         android:id="@+id/toolbarview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFC6C6"/>
+        android:background="#E883A5"/>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnAddProduct"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add product"
+        android:backgroundTint="@color/black"
+        app:cornerRadius="8dp"
+        app:elevation="8dp"
+        app:strokeColor="@color/white"
+        app:strokeWidth="5dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
+        android:layout_marginTop="12dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
